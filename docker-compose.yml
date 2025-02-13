@@ -1,0 +1,25 @@
+services:
+  service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: run
+    restart: unless-stopped
+    volumes:
+      - ./node_modules:/app/node_modules
+      - ./logs:/app/logs
+      - ./dist:/app/dist
+      - .sequelizerc:/app/.sequelizerc
+      - ./src/database/migrations:/app/src/database/migrations
+      - ./src/database/seeders:/app/src/database/seeders
+      - ./src/database/sequelizerc.config.js:/app/src/database/sequelizerc.config.js
+    env_file:
+      - ./.env
+    ports:
+      - "3000:3000"
+    networks:
+      abdilla.my.id:
+        ipv4_address: 172.20.0.9
+networks:
+  abdilla.my.id:
+    external: true
