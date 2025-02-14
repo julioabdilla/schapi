@@ -10,6 +10,9 @@ import { HttpExceptionFilter } from 'src/common/filters/exception.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   const config = app.get(ConfigService);
+  app.enableCors({
+    exposedHeaders: 'X-Total-Count, X-Current-Page, X-Total-Page, X-Per-Page'
+  });
   app.use(express.json());
   app.useLogger(app.get(Logger));
   app.useGlobalInterceptors(new LoggerResponseInterceptor());

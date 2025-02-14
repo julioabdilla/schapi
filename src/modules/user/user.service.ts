@@ -4,7 +4,7 @@ import { Inject, Injectable, Logger } from "@nestjs/common";
 import { User } from "./entities/user.entity";
 import { Permission } from "./entities/permission.entity";
 import { Role } from "./entities/role.entity";
-import { CreateUser } from "./dtos/create_user.dto";
+import { CreateUser } from "./dto/create_user.dto";
 import { Sequelize } from "sequelize-typescript";
 import { StringUtils } from "@/shared/utils";
 import { Scrypt } from "@/shared/crypto";

@@ -28,7 +28,7 @@ export class MediaService {
       media.data = file.buffer;
       media.mimetype = file.mimetype;
       await media.save();
-      return `${this.config.get<string>('DOMAIN')}/media/${filename}`;
+      return `${this.config.get<string>('SRC_DOMAIN')}/media/${filename}`;
     } catch (e) {
       console.error(e);
       throw new UnknownException();

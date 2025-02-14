@@ -1,6 +1,6 @@
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 import { UserService } from "./user.service";
-import { CreateUser } from "./dtos/create_user.dto";
+import { CreateUser } from "./dto/create_user.dto";
 import { AuthGuard } from "@/common/guards/auth.guard";
 import { Roles } from "@/common/decorators/role.decorator";
 import { UserRole } from "@/common/enums/user_role.enum";

@@ -5,7 +5,7 @@ import { User } from "../user/entities/user.entity";
 import { AuthException, UnknownException } from '@/common/filters/exception.filter';
 import { ConfigService } from '@nestjs/config';
 import { JWT, Scrypt } from '@/shared/crypto';
-import { GetToken } from './dtos/get_token.dto';
+import { GetToken } from './dto/get_token.dto';
 import { Role } from '../user/entities/role.entity';
 import { Permission } from '../user/entities/permission.entity';
 import { CacheService } from '@/cache/cache.service';
