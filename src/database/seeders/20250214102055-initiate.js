@@ -2,19 +2,12 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // Insert into `users` table
-    await queryInterface.bulkInsert('users', [
-      {
-        id: 1,
-        uuid: '6d2e44f0-551d-4886-954f-942a6c23754e',
-        role_id: 1,
-        name: 'admin',
-        username: 'julio.abdilla@gmail.com',
-        password: '6b2860a6da44b826d9cae5f351c4ada7',
-        created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
-        updated_at: Sequelize.literal('CURRENT_TIMESTAMP'),
-        deleted_at: null,
-      },
+    
+    // Insert into `roles` table
+    await queryInterface.bulkInsert('roles', [
+      { id: 1, name: 'superuser' },
+      { id: 2, name: 'admin' },
+      { id: 3, name: 'staff' },
     ]);
 
     // Insert into `permissions` table
@@ -40,11 +33,19 @@ module.exports = {
       { id: 19, name: 'me.delete' },
     ]);
 
-    // Insert into `roles` table
-    await queryInterface.bulkInsert('roles', [
-      { id: 1, name: 'superuser' },
-      { id: 2, name: 'admin' },
-      { id: 3, name: 'staff' },
+    // Insert into `users` table
+    await queryInterface.bulkInsert('users', [
+      {
+        id: 1,
+        uuid: '6d2e44f0-551d-4886-954f-942a6c23754e',
+        role_id: 1,
+        name: 'admin',
+        username: 'julio.abdilla@gmail.com',
+        password: '6b2860a6da44b826d9cae5f351c4ada7',
+        created_at: Sequelize.literal('CURRENT_TIMESTAMP'),
+        updated_at: Sequelize.literal('CURRENT_TIMESTAMP'),
+        deleted_at: null,
+      },
     ]);
   },
 
