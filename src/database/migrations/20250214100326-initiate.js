@@ -1,7 +1,9 @@
 'use strict'
+require('dotenv').config();
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    await queryInterface.sequelize.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\`;`);
     // Create `articles` table
     await queryInterface.createTable('articles', {
       id: {
