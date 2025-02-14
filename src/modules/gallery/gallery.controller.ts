@@ -18,8 +18,8 @@ export class GalleryController {
   @Roles(UserRole.ADMIN, UserRole.STAFF)
   @UseResponseDto(Gallery)
   @Get()
-  async getGallery(@Req() req: any, @Query('page') page: string = '1', @Query('perpage') pageSize: string = '10') {
-    const gallery = await this.galleryService.getGallery(Number(page), Number(pageSize));
+  async getGallery(@Req() req: any, @Query('page') page: string = '1', @Query('perpage') pageSize: string = '10', @Query('item') itemSize: string = '2') {
+    const gallery = await this.galleryService.getGallery(Number(page), Number(pageSize), Number(itemSize));
     req.pagination.page = Number(page);
     req.pagination.perpage = Number(pageSize);
     req.pagination.totalData = Number(gallery.total);
