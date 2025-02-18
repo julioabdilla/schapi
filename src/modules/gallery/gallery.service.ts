@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { Gallery as GalleryModel } from "./entities/gallery.entity";
-import { GalleryItem as GalleryItemModel } from "./entities/gallery_item.entity";
+import { GalleryItem, GalleryItem as GalleryItemModel} from "../gallery_item/entities/gallery_item.entity";
 import { User } from "../user/entities/user.entity";
 import { Gallery } from "./dto/gallery.dto";
 import { GalleryMapper } from "./gallery.mapper";
@@ -31,15 +31,6 @@ export class GalleryService {
       limit: size,
     });
     return { total: count, data: this.galleryMapper.entitiesToDto(galleries) };
-  }
-
-  async getGalleryDetail(page: number, size: number) {
-    const galleryItems = await this.galleryItemRepository.findAll({
-      order: [['id', 'DESC']],
-      offset: (page - 1) * size,
-      limit: size,
-    });
-    return galleryItems;
   }
   
   async addGallery(user: User, data: Gallery) {

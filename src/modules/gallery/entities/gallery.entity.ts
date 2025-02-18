@@ -1,7 +1,7 @@
 import { Table, Column, DataType, ForeignKey, HasMany } from 'sequelize-typescript';
 
 import { User } from '@/modules/user/entities/user.entity';
-import { GalleryItem } from './gallery_item.entity';
+import { GalleryItem } from '@/modules/gallery_item/entities/gallery_item.entity';
 import { Model } from '@/database/database.model';
 
 @Table({ 

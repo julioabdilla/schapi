@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, Req, Res, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, Req, Res, UseGuards, UseInterceptors } from "@nestjs/common";
 import { GalleryService } from "./gallery.service";
 import { Gallery } from "./dto/gallery.dto";
 import { Roles } from "@/common/decorators/role.decorator";
@@ -6,16 +6,18 @@ import { UserRole } from "@/common/enums/user_role.enum";
 import { AuthGuard } from "@/common/guards/auth.guard";
 import { UseResponseDto } from "@/common/decorators/response_dto.decorator";
 import { ApiInterceptor } from "@/common/interceptors/response_interceptor";
+import { GalleryItemService } from "../gallery_item/gallery_item.service";
+import { GalleryItem } from "../gallery_item/dto/gallery_item.dto";
 
 @UseInterceptors(ApiInterceptor)
 @Controller('/gallery')
 export class GalleryController {
 
   constructor(
-    private readonly galleryService: GalleryService
+    private readonly galleryService: GalleryService,
+    private readonly galleryItemService: GalleryItemService,
   ) {}
 
-  @Roles(UserRole.ADMIN, UserRole.STAFF)
   @UseResponseDto(Gallery)
   @Get()
   async getGallery(@Req() req: any, @Query('page') page: string = '1', @Query('perpage') pageSize: string = '10', @Query('item') itemSize: string = '2') {
@@ -26,9 +28,14 @@ export class GalleryController {
     return gallery.data;
   }
 
-  @Get()
-  async getGalleryItem(@Query('page') page: string = '1', @Query('size') size: string = '10') {
-    return this.galleryService.getGalleryDetail(Number(page), Number(size));
+  @UseResponseDto(GalleryItem)
+  @Get('/:id/item')
+  async getGalleryItem(@Req() req: any, @Param('id') id: string, @Query('page') page: string = '1', @Query('perpage') pageSize: string = '10') {
+    const galleryItem = await this.galleryItemService.getByGallery(id, Number(page), Number(pageSize));
+    req.pagination.page = Number(page);
+    req.pagination.perpage = Number(pageSize);
+    req.pagination.totalData = Number(galleryItem.total);
+    return galleryItem.data;
   }
 
   @Roles(UserRole.ADMIN, UserRole.STAFF)

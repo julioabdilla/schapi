@@ -1,7 +1,7 @@
 import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 
 import { User } from '@/modules/user/entities/user.entity';
-import { Gallery } from './gallery.entity';
+import { Gallery } from '@/modules/gallery/entities/gallery.entity';
 import { Media } from '@/modules/media/entities/media.entity';
 import { Model } from '@/database/database.model';
 
@@ -83,4 +83,7 @@ export class GalleryItem extends Model {
 
   @BelongsTo(() => Media)
   media: Media;
+
+  @BelongsTo(() => Gallery)
+  gallery: Gallery;
 }

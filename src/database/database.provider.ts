@@ -1,6 +1,6 @@
 import { Article } from "@/modules/article/entities/article.entity";
 import { Gallery } from "@/modules/gallery/entities/gallery.entity";
-import { GalleryItem } from "@/modules/gallery/entities/gallery_item.entity";
+import { GalleryItem } from "@/modules/gallery_item/entities/gallery_item.entity";
 import { Media } from "@/modules/media/entities/media.entity";
 import { Staff } from "@/modules/staff/entities/staff.entity";
 import { Permission } from "@/modules/user/entities/permission.entity";

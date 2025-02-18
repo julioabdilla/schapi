@@ -1,5 +1,5 @@
 import { Expose, Type } from "class-transformer";
-import { GalleryItem } from "./gallery_item.dto";
+import { GalleryItem } from "@/modules/gallery_item/dto/gallery_item.dto";
 import { BaseDto } from "@/common/dto/base.dto";
 
 export class Gallery extends BaseDto {
