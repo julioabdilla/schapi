@@ -1,15 +1,16 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
-import { GalleryItem } from "./entities/gallery_item.entity";
+import { GalleryItem as GalleryItemModel } from "./entities/gallery_item.entity";
 import { GalleryItemMapper } from "./gallery_item.mapper";
-import { Gallery } from "../gallery/entities/gallery.entity";
+import { Gallery as GalleryModel } from "../gallery/entities/gallery.entity";
+import { User as UserModel } from "../user/entities/user.entity";
 
 @Injectable()
 export class GalleryItemService {
   private readonly logger = new Logger(this.constructor.name);
 
   constructor(
-    @Inject(GalleryItem.name)
-    private readonly galleryItemRepository: typeof GalleryItem,
+    @Inject(GalleryItemModel.name)
+    private readonly galleryItemRepository: typeof GalleryItemModel,
     private readonly galleryItemMapper: GalleryItemMapper,
   ) {}
 
@@ -18,7 +19,7 @@ export class GalleryItemService {
       const {rows: galleryItem, count } = await this.galleryItemRepository.findAndCountAll({
         include: [
           {
-            model: Gallery,
+            model: GalleryModel,
             required: true,
           }
         ],
@@ -41,7 +42,7 @@ export class GalleryItemService {
         },
         include: [
           {
-            model: Gallery,
+            model: GalleryModel,
             required: true,
           }
         ],
@@ -50,6 +51,32 @@ export class GalleryItemService {
         order: [['id', 'DESC']]
       });
       return { total: count, data: this.galleryItemMapper.entitiesToDto(galleryItem)};
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  async remove(user: UserModel, id: string) {
+    try {
+      await this.galleryItemRepository.destroy({
+        where: {
+          uuid: id
+        }
+      });
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  async restore(user: UserModel, id: string) {
+    try {
+      await this.galleryItemRepository.restore({
+        where: {
+          uuid: id
+        }
+      });
     } catch (e) {
       this.logger.error(e);
       throw e;

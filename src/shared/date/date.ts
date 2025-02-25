@@ -3,6 +3,11 @@ import * as moment from 'moment';
 export class DateUtils {
 
   public static ISOFormat = 'YYYY-MM-DD[T]HH:mm:ss.SSSZ'; 
+
+  public static now(format = this.ISOFormat) {
+    return moment();
+  }
+
   public static getTodayRange(): { startDate: moment.Moment, endDate: moment.Moment } {
     const now = moment().utcOffset('+07:00');
     return {
