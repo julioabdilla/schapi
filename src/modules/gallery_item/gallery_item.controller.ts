@@ -2,7 +2,7 @@ import { Controller, Delete, Get, Param, Patch, Query, Req, UseInterceptors } fr
 import { GalleryItemService } from "./gallery_item.service";
 import { UseResponseDto } from "@/common/decorators/response_dto.decorator";
 import { GalleryItem } from "./dto/gallery_item.dto";
-import { ApiInterceptor } from "@/common/interceptors/response_interceptor";
+import { ApiInterceptor } from "@/common/interceptors/response.interceptor";
 import { UserRole } from "@/common/enums/user_role.enum";
 import { Roles } from "@/common/decorators/role.decorator";
 

@@ -1,7 +1,7 @@
 import { Body, Controller, Headers, Post, Query, UseInterceptors } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { GetToken, GetTokenResponse } from "./dto/get_token.dto";
-import { ApiInterceptor } from "@/common/interceptors/response_interceptor";
+import { ApiInterceptor } from "@/common/interceptors/response.interceptor";
 import { UseResponseDto } from "@/common/decorators/response_dto.decorator";
 import { Roles } from "@/common/decorators/role.decorator";
 import { UserRole } from "@/common/enums/user_role.enum";

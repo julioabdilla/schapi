@@ -60,6 +60,7 @@ export class GalleryService {
         });
       }));
       dbTransaction.commit();
+      return this.galleryMapper.entityToDto(gallery);
     } catch (e) {
       this.logger.error(e);
       dbTransaction.rollback();

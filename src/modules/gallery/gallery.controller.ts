@@ -5,7 +5,7 @@ import { Roles } from "@/common/decorators/role.decorator";
 import { UserRole } from "@/common/enums/user_role.enum";
 import { AuthGuard } from "@/common/guards/auth.guard";
 import { UseResponseDto } from "@/common/decorators/response_dto.decorator";
-import { ApiInterceptor } from "@/common/interceptors/response_interceptor";
+import { ApiInterceptor } from "@/common/interceptors/response.interceptor";
 import { GalleryItemService } from "../gallery_item/gallery_item.service";
 import { GalleryItem } from "../gallery_item/dto/gallery_item.dto";
 
@@ -28,6 +28,7 @@ export class GalleryController {
     return gallery.data;
   }
 
+  @UseResponseDto(Gallery)
   @Roles(UserRole.ADMIN, UserRole.STAFF)
   @UseGuards(AuthGuard)
   @Post()

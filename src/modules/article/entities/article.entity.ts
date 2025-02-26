@@ -56,11 +56,18 @@ export class Article extends Model {
     field: 'published_at',
     type: DataType.DATE
   })
-  publishedAt: moment.Moment;
+  publishedAt: string;
 
   @Column({
     field: 'tags',
-    type: DataType.STRING
+    type: DataType.STRING,
+    get() {
+      const rawValue = this.getDataValue('tags');
+      return rawValue ? rawValue.split(',') : [];
+    },
+    set(value: string[] | null) {
+      this.setDataValue('tags', value ? value.join(',') : '');
+    }
   })
   tags: string[];
 

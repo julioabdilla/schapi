@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
 
 import { CacheModule } from 'src/cache';
+import { LoggerModule as CustomLoggerModule } from 'src/common/logger/logger.module';
 import { OnRequestMiddleware } from 'src/common/middlewares/on_request.middleware';
 import { DatabaseModule } from 'src/database';
 import { UserModule } from './modules/user/user.module';
@@ -23,6 +24,7 @@ import { MediaModule } from './modules/media/media.module';
       isGlobal: true,
       expandVariables: true,
     }),
+    CustomLoggerModule,
     LoggerModule.forRoot({
       pinoHttp: {
         redact: {

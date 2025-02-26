@@ -1,12 +1,16 @@
 import { Response, NextFunction } from 'express';
-import * as moment from 'moment';
-import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
+import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Logger } from '../logger/logger';
 
 @Injectable()
 export class OnRequestMiddleware implements NestMiddleware {
-  private readonly logger = new Logger(this.constructor.name);
+  // private readonly logger = new Logger(this.constructor.name);
+  constructor(
+    private readonly logger: Logger
+  ) {}
+
   async use(req: any, res: Response, next: NextFunction) {
-    this.logger.log(`[${moment().format()}] Incoming request ${req.method} ${req.url}, headers=${JSON.stringify(req.headers)}, body=${JSON.stringify(req.body)}`);
+    this.logger.log(`Incoming request ${req.method} ${req.url}, headers=${JSON.stringify(req.headers)}, body=${JSON.stringify(req.body)}`);
     req.pagination = {};
     if (req.query.page) {
       req.pagination.page = Number(req.query.page); 

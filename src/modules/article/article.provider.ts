@@ -1,3 +1,4 @@
+import { ArticleMapper } from "./article.mapper";
 import { ArticleService } from "./article.service";
 import { Article } from "./entities/article.entity";
 
@@ -7,4 +8,5 @@ export const providers = [
     useValue: Article
   },
   ArticleService,
+  ArticleMapper,
 ]
