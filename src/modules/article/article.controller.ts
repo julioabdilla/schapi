@@ -7,7 +7,9 @@ import { UserRole } from "@/common/enums/user_role.enum";
 import { AuthGuard } from "@/common/guards/auth.guard";
 import { ArticleStatus } from "@/common/enums/article_status.enum";
 import { JsonLimitInterceptor } from "@/common/interceptors/json_limit.interceptor";
+import { ApiInterceptor } from "@/common/interceptors/response.interceptor";
 
+@UseInterceptors(ApiInterceptor)
 @Controller('/article')
 export class ArticleController {
   
