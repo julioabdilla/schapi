@@ -19,8 +19,18 @@ export class ArticleController {
 
   @UseResponseDto(Article)
   @Get()
-  async getAll(@Req() req: any, @Query('page') page: string = '1', @Query('perpage') pageSize: string = '10') {
-    const articles = await this.articleService.getAll(Number(page), Number(pageSize));
+  async getAll(@Req() req: any, @Query('page') page: string = '1', @Query('perpage') pageSize: string = '10', @Query('status') status: ArticleStatus, @Query('sort') sort: string) {
+    const articles = await this.articleService.getAll(Number(page), Number(pageSize), status, sort);
+    req.pagination.page = Number(page);
+    req.pagination.perpage = Number(pageSize);
+    req.pagination.totalData = Number(articles.total);
+    return articles.data;
+  }
+
+  @UseResponseDto(Article)
+  @Get('/published')
+  async getPublished(@Req() req: any, @Query('page') page: string = '1', @Query('perpage') pageSize: string = '10', @Query('sort') sort: string) {
+    const articles = await this.articleService.getAll(Number(page), Number(pageSize), ArticleStatus.PUBLISHED, sort);
     req.pagination.page = Number(page);
     req.pagination.perpage = Number(pageSize);
     req.pagination.totalData = Number(articles.total);

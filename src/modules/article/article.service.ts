@@ -16,9 +16,14 @@ export class ArticleService {
     private readonly articleMapper: ArticleMapper,
   ) {}
   
-  async getAll(page: number, size: number): Promise<{total: number, data: Article[]}> {
+  async getAll(page: number, size: number, status: ArticleStatus = null, sort = 'id.desc'): Promise<{total: number, data: Article[]}> {
+    let where: any;
+    if (status) {
+      where = { status };
+    }
     const {rows: articles, count } = await this.articleRepository.findAndCountAll({
-      order: [['id', 'DESC']],
+      where,
+      order: sort.split(',').map(sort => sort.split('.')) as any,
       offset: (page - 1) * size,
       limit: size,
     });
