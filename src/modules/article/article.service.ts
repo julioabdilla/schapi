@@ -60,6 +60,7 @@ export class ArticleService {
   async create(user: UserModel, data: Article) {
     try {
       const article = this.articleRepository.build();
+      article.slug = '';
       article.title = data.title;
       article.content = data.content;
       article.status = data.status;
@@ -85,10 +86,18 @@ export class ArticleService {
       if (!article) {
         throw new UnknownException();
       }
-      article.title = data.title;
-      article.content = data.content;
-      article.status = data.status;
-      article.tags = data.tags;
+      if (data.title) {
+        article.title = data.title;
+      }
+      if (data.content) {
+        article.content = data.content;
+      }
+      if (data.status) {
+        article.status = data.status;
+      }
+      if (data.tags) {
+        article.tags = data.tags;
+      }
       if (data.status === ArticleStatus.PUBLISHED) {
         article.publishedAt = DateUtils.now().format();
         // article.createdBy = user.id;
