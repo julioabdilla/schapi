@@ -18,6 +18,7 @@ export class ArticleMapper extends BaseMapper<ArticleModel, Article> {
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       deletedAt: entity.deletedAt,
+      createdBy: entity.creator?.name || null
     };
   }
 }

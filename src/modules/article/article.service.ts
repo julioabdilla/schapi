@@ -5,6 +5,7 @@ import { Article } from "./dto/article.dto";
 import { ArticleStatus } from "@/common/enums/article_status.enum";
 import { DateUtils } from "@/shared/date";
 import { ArticleMapper } from "./article.mapper";
+import { UnknownException } from "@/common/filters/exception.filter";
 
 @Injectable()
 export class ArticleService {
@@ -24,6 +25,12 @@ export class ArticleService {
     const {rows: articles, count } = await this.articleRepository.findAndCountAll({
       where,
       order: sort.split(',').map(sort => sort.split('.')) as any,
+      include: [
+        {
+          model: UserModel,
+          as: 'creator',
+        }
+      ],
       offset: (page - 1) * size,
       limit: size,
     });
@@ -35,7 +42,13 @@ export class ArticleService {
       const article = await this.articleRepository.findOne({
         where: {
           uuid: id
-        }
+        },
+        include: [
+          {
+            model: UserModel,
+            as: 'creator',
+          }
+        ],
       });
       return this.articleMapper.entityToDto(article);
     } catch (e) {
@@ -56,6 +69,45 @@ export class ArticleService {
       }
       await article.save();
       return this.articleMapper.entityToDto(article);
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  async update(user: UserModel, id: string, data: Article) {
+    try {
+      const article = await this.articleRepository.findOne({
+        where: {
+          uuid: id
+        }
+      });
+      if (!article) {
+        throw new UnknownException();
+      }
+      article.title = data.title;
+      article.content = data.content;
+      article.status = data.status;
+      article.tags = data.tags;
+      if (data.status === ArticleStatus.PUBLISHED) {
+        article.publishedAt = DateUtils.now().format();
+        // article.createdBy = user.id;
+      }
+      await article.save();
+      return this.articleMapper.entityToDto(article);
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  async delete(user: UserModel, id: string) {
+    try {
+      await this.articleRepository.destroy({
+        where: {
+          uuid: id
+        }
+      });
     } catch (e) {
       this.logger.error(e);
       throw e;

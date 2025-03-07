@@ -110,6 +110,19 @@ export class GalleryService {
     }
   }
 
+  async deleteGallery(user: UserModel, id: string): Promise<void> {
+    try {
+      await this.galleryRepository.destroy({
+        where: {
+          uuid: id,
+        },
+      });
+    } catch(e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
   async addGalleryItem(user: UserModel, galleryId: string, data: GalleryItem) {
     try {
       const gallery = await this.galleryRepository.findOne({

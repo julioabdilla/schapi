@@ -75,6 +75,9 @@ export class AuthService {
       await this.cacheService.set(`${AuthGuard.TOKEN_CACHE_PREFIX}${accessToken}`, `${user.id}`, accessTokenExpIn);
 
       return {
+        username: user.username,
+        name: user.name,
+        role: user.role.name,
         token: accessToken,
         expiresAt: accessTokenExp.format(),
       };

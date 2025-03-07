@@ -55,9 +55,17 @@ export class GalleryController {
   }
 
   @Roles(UserRole.ADMIN, UserRole.STAFF)
+  @UseGuards(AuthGuard)
   @Patch('/:id')
   async editGallery(@Req() req: any, @Param('id') id: string, @Body() body: Gallery) {
     await this.galleryService.editGallery(req.user, id, body);
+  }
+
+  @Roles(UserRole.ADMIN, UserRole.STAFF)
+  @UseGuards(AuthGuard)
+  @Delete('/:id')
+  async deleteGallery(@Req() req: any, @Param('id') id: string) {
+    await this.galleryService.deleteGallery(req.user, id);
   }
 
   @UseResponseDto(GalleryItem)

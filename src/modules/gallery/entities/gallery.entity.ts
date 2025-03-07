@@ -1,4 +1,4 @@
-import { Table, Column, DataType, ForeignKey, HasMany } from 'sequelize-typescript';
+import { Table, Column, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
 
 import { User } from '@/modules/user/entities/user.entity';
 import { GalleryItem } from '@/modules/gallery_item/entities/gallery_item.entity';
@@ -68,4 +68,13 @@ export class Gallery extends Model {
 
   @HasMany(() => GalleryItem)
   items: GalleryItem[];
+  
+  @BelongsTo(() => User, 'created_by')
+  creator: User;
+
+  @BelongsTo(() => User, 'updated_by')
+  updater: User;
+
+  @BelongsTo(() => User, 'deleted_by')
+  deleter: User;
 }

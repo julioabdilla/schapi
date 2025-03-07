@@ -17,4 +17,6 @@ export class Article extends BaseDto {
   updatedAt: string;
   @Expose({ name: 'deleted_at'})
   deletedAt: string;
+  @Expose({ name: 'created_by'})
+  createdBy: string;
 }

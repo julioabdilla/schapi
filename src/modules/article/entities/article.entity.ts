@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Table, Column, DataType, ForeignKey } from 'sequelize-typescript';
+import { Table, Column, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 
 import { ArticleStatus } from '@/common/enums/article_status.enum';
 import { User } from '@/modules/user/entities/user.entity';
@@ -91,4 +91,13 @@ export class Article extends Model {
     type: DataType.BIGINT.UNSIGNED
   })
   deletedBy: number;
+
+  @BelongsTo(() => User, 'created_by')
+  creator: User;
+
+  @BelongsTo(() => User, 'updated_by')
+  updater: User;
+
+  @BelongsTo(() => User, 'deleted_by')
+  deleter: User;
 }
