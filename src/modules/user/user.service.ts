@@ -27,8 +27,10 @@ export class UserService {
   async createUser(data: CreateUser) {
     const now = moment();
     try {
-      const password = StringUtils.random(8);
-      const hashedPassword = await Scrypt.hash(password, this.config.get<string>('PASS_SALT'));
+      if (!data.password) {
+        data.password = StringUtils.random(8);
+      }
+      const hashedPassword = await Scrypt.hash(data.password, this.config.get<string>('PASS_SALT'));
       const user = this.userRepository.build();
       const role = await this.roleRepository.findOne({
         where: {
@@ -43,7 +45,7 @@ export class UserService {
       return {
         name: user.name,
         email: user.username,
-        password,
+        password: data.password,
       };
     } catch (e) {
       console.error(e);
