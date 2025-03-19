@@ -37,13 +37,11 @@ export class GalleryController {
   }
 
   @UseResponseDto(Gallery)
-  @UseResponseDto(GalleryItem)
   @Get('/:id')
   async getGalleryDetail(@Param('id') id: string) {
     return this.galleryService.getGalleryDetail(id);
   }
 
-  @UseResponseDto(Gallery)
   @UseResponseDto(GalleryItem)
   @Get('/:id/item')
   async getGalleryItem(@Req() req: any, @Param('id') id: string, @Query('page') page: string = '1', @Query('perpage') pageSize: string = '10') {

@@ -46,6 +46,7 @@ export class GalleryService {
       gallery.title = data.title;
       gallery.description = data.description;
       gallery.createdBy = user.id;
+      gallery.items = [];
       await gallery.save({ transaction: dbTransaction });
       
       await Promise.all(data.galleryItems.map(item => {
@@ -56,6 +57,7 @@ export class GalleryService {
           galleryItem.caption = item.caption;
           galleryItem.createdBy = user.id;
           await galleryItem.save({ transaction: dbTransaction });
+          gallery.items.push(galleryItem);
           resolve();
         });
       }));
