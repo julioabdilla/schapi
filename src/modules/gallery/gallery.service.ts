@@ -35,7 +35,7 @@ export class GalleryService {
       offset: (page - 1) * size,
       limit: size,
     });
-    return { total: count, data: this.galleryMapper.entitiesToDto(galleries) };
+    return { total: count, data: this.galleryMapper.entitiesToDto(galleries.filter(gallery => gallery.items.length > 0)) };
   }
   
   async addGallery(user: UserModel, data: Gallery) {
